@@ -1,4 +1,10 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('/src/fonts/outfit/Outfit-VariableFont_wght.ttf') format('truetype-variations');
+}
+
 @theme {
     --color-app-light-blue: #31C3BD;
     --color-app-light-blue-hover: #65E9E4;
@@ -8,4 +14,26 @@
     --color-app-semi-dark-navy: #1F3641;
     --color-app-silver: #A8BFC9;
     --color-app-silver-hover: #DBE8ED;
+
+    --font-outfit: 'Outfit', sans-serif;
+}
+
+.app-text-body {
+    @apply font-outfit font-medium text-[14px] tracking-[0.88px];
+}
+
+.app-heading-xs {
+    @apply font-outfit font-bold text-[16px] tracking-[1px];
+}
+
+.app-heading-s {
+    @apply font-outfit font-bold text-[20px] tracking-[1.25px];
+}
+
+.app-heading-m {
+    @apply font-outfit font-bold text-[24px] tracking-[1.5px];
+}
+
+.app-heading-l {
+    @apply font-outfit font-bold text-[40px] tracking-[2.5px];
 }
