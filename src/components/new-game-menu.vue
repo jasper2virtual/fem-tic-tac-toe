@@ -7,9 +7,14 @@
         <div>
             <player1-mark-selector />
         </div>
-        <div class="flex flex-col gap-2">
-            <button>NEW GAME (VS CPU)</button>
-            <button>NEW GAME (VS PLAYER)</button>
+        <div class="flex flex-col gap-6">
+            <button class=" bg-app-light-yellow hover:bg-app-light-yellow-hover p-4 rounded-xl
+            app-text-heading-s shadow-[0_8px_0_0_#CC8B13]"
+            @click="$emit('newGame','vsCpu')">NEW GAME (VS CPU)</button>
+            <button class=" bg-app-light-blue hover:bg-app-light-blue-hover p-4 rounded-xl
+            app-text-heading-s shadow-[0_8px_0_0_#118C87]"
+            @click="$emit('newGame','vsPlayer')"
+            >NEW GAME (VS PLAYER)</button>
         </div>
     </div>
 </template>

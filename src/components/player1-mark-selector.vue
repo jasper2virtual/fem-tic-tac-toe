@@ -1,7 +1,9 @@
 <template>
-    <div class="flex flex-col gap-2 bg-app-semi-dark-navy p-4 rounded-lg">
-        <div>PICK PLAYER 1’S MARK</div>
-        <label class="p-2 bg-app-dark-navy grid rounded-md">
+    <div class="flex flex-col items-center gap-2 bg-app-semi-dark-navy p-4 rounded-xl
+    shadow-[0_8px_0_0_#10212A]
+    ">
+        <div class="app-text-heading-xs text-app-silver">PICK PLAYER 1’S MARK</div>
+        <label class=" p-2 bg-app-dark-navy grid rounded-md self-stretch">
             <input type="checkbox" true-value="X" false-value="O" v-model="player1mark"
                 class="appearance-none col-span-full row-span-full" />
             <div class="col-span-full row-span-full grid grid-cols-2 place-items-center p-2">
@@ -9,11 +11,11 @@
                 <i v-html="iconOSvg" ref="iconORef" class="icon-x-o" :class="{ 'mark-selected': player1mark == 'O' }" />
             </div>
             <div class="col-span-full row-span-full relative">
-                <div class="absolute h-full w-1/2 bg-app-silver rounded-md transition-[left] duration-500"
+                <div class="absolute h-full w-1/2 bg-app-silver hover:bg-app-silver-hover rounded-md transition-[left] duration-500"
                     :class="{ 'left-0': player1mark == 'X', 'left-1/2': player1mark == 'O' }"></div>
             </div>
         </label>
-        <div>REMEMBER : X GOES FIRST</div>
+        <div class=" app-text-body text-app-silver">REMEMBER : X GOES FIRST</div>
     </div>
 </template>
 <script lang="ts" setup>

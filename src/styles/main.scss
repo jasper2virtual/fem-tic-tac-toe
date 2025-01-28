@@ -21,22 +21,18 @@
     --font-outfit: 'Outfit', sans-serif;
 }
 
-.app-text-body {
+@utility app-text-body {
     @apply font-outfit font-medium text-[14px] tracking-[0.88px];
 }
-
-.app-heading-xs {
+@utility app-text-heading-xs {
     @apply font-outfit font-bold text-[16px] tracking-[1px];
 }
-
-.app-heading-s {
+@utility app-text-heading-s {
     @apply font-outfit font-bold text-[20px] tracking-[1.25px];
 }
-
-.app-heading-m {
+@utility app-text-heading-m {
     @apply font-outfit font-bold text-[24px] tracking-[1.5px];
 }
-
-.app-heading-l {
+@utility app-text-heading-l {
     @apply font-outfit font-bold text-[40px] tracking-[2.5px];
 }

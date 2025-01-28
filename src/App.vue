@@ -1,9 +1,11 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-screen min-h-screen bg-app-dark-navy">
+  <div
+    class="flex flex-col items-center justify-center w-screen min-h-screen bg-app-dark-navy p-4 max-app-tablet:relative">
+    <div id="mobile-header" class=" max-app-tablet:absolute max-app-tablet:left-4 max-app-tablet:right-4 max-app-tablet:top-4 max-w-[460px] mx-auto"></div>
     <main-screen-container>
 
-      <new-game-menu v-if="currentScreen === 'NewGameMenu'" />
-      <game-board v-if="currentScreen === 'GameBoard'" />
+      <new-game-menu v-if="currentScreen === 'NewGameMenu'" @newGame="newGame" />
+      <game-board-screen v-if="currentScreen === 'GameBoard'" :gameMode="gameMode" />
 
     </main-screen-container>
   </div>
@@ -12,14 +14,17 @@
 import { provide, ref } from 'vue';
 import MainScreenContainer from '@/components/main-screen-container.vue'
 import NewGameMenu from '@/components/new-game-menu.vue'
-import GameBoard from '@/components/game-board.vue'
+import GameBoardScreen from '@/components/game-board-screen.vue'
 
-// Data
-const player1mark = ref<'X'|'O'>('X');
+const player1mark = ref<'X' | 'O'>('X');
 provide('player1mark', player1mark);
+const gameMode = ref<'vsCpu' | 'vsPlayer'>('vsCpu');
 
-// State
 const currentScreen = ref<'NewGameMenu' | 'GameBoard'>('NewGameMenu');
 
+const newGame = (newGameMode: 'vsCpu' | 'vsPlayer') => {
+  gameMode.value = newGameMode;
+  currentScreen.value = 'GameBoard';
+}
 
 </script>

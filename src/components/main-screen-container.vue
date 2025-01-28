@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col mx-auto w-full min-h-full 
-    app-tablet:min-h-fit app-tablet:max-w-[460px]">
+    <div class="flex flex-col mx-auto w-full min-h-full max-w-[460px]
+    app-tablet:min-h-fit">
         <slot />
     </div>
 </template>
