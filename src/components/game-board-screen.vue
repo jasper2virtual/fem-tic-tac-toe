@@ -7,24 +7,35 @@
                     <img src="@/images/icon-x.svg" alt="X" class="w-8 h-8" />
                     <img src="@/images/icon-o.svg" alt="O" class="w-8 h-8" />
                 </div>
-                <div
-                    class="app-text-heading-xs text-app-silver shadow-[0_4px_0_0_#10212A] p-2 rounded-lg
+                <div class="app-text-heading-xs text-app-silver shadow-[0_4px_0_0_#10212A] p-2 rounded-lg
                     mx-auto flex gap-4 items-center bg-app-semi-dark-navy">
-                    <i v-show="whoTurn=='O'" ref="iconORef" class="who-turn-icon" v-html="iconOSvg"></i>
-                    <i v-show="whoTurn=='X'" ref="iconXRef" class="who-turn-icon" v-html="iconXSvg"></i>
-                     TURN
+                    <i v-show="whoTurn == 'O'" ref="iconORef" class="who-turn-icon" v-html="iconOSvg"></i>
+                    <i v-show="whoTurn == 'X'" ref="iconXRef" class="who-turn-icon" v-html="iconXSvg"></i>
+                    TURN
                 </div>
-                <button class=" justify-self-end shadow-[0_4px_0_0_#6B8997] bg-app-silver hover:bg-app-silver-hover p-2 rounded-lg cursor-pointer" v-html="iconRestartSvg" />
+                <button
+                    class=" justify-self-end shadow-[0_4px_0_0_#6B8997] bg-app-silver hover:bg-app-silver-hover p-2 rounded-lg cursor-pointer"
+                    v-html="iconRestartSvg" />
             </div>
-            
+
         </Teleport>
         <div>
-            <game-board :gameBoardState="gameBoardState" @cellClick="cellClick"/>
+            <game-board :gameBoardState="gameBoardState" @cellClick="cellClick" />
         </div>
-        <div class="grid grid-cols-3 gap-4">
-            <div class=" aspect-[2] rounded-lg bg-app-light-blue"></div>
-            <div class=" aspect-[2] rounded-lg bg-app-silver"></div>
-            <div class=" aspect-[2] rounded-lg bg-app-light-yellow"></div>
+        <div class="grid grid-cols-3 gap-4 text-app-dark-navy">
+
+            <div class="win-count-box bg-app-light-blue">
+                <div class="title ">X ({{ }})</div>
+                <div class="count ">{{ xWinCount }}</div>
+            </div>
+            <div class="win-count-box bg-app-silver">
+                <div class="title ">TIES</div>
+                <div class="count ">{{ tiesCount }}</div>
+            </div>
+            <div class="win-count-box bg-app-light-yellow">
+                <div class="title ">O ({{ }})</div>
+                <div class="count ">{{ oWinCount }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -67,6 +78,9 @@ const cellClick = (index: number) => {
     gameBoardState.value[index] = whoTurn.value
     whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
 }
+const xWinCount = ref<number>(0)
+const tiesCount = ref<number>(0)
+const oWinCount = ref<number>(0)
 </script>
 <style lang="scss" scoped>
 @use "@/styles/main.scss";
@@ -75,4 +89,15 @@ const cellClick = (index: number) => {
     @apply fill-app-silver;
 }
 
+.win-count-box {
+    @apply aspect-[140/72] rounded-lg flex flex-col justify-center items-center;
+
+    &>.title {
+        @apply app-text-body;
+    }
+
+    &>.count {
+        @apply app-text-heading-m;
+    }
+}
 </style>
