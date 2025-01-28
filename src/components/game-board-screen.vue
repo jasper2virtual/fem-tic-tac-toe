@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-5">
 
         <Teleport to="#mobile-header" :disabled="isTablet">
-            <div class="flex items-center">
+            <div class="grid grid-cols-3 gap-4 items-center">
                 <div class="flex gap-2">
                     <img src="@/images/icon-x.svg" alt="X" class="w-8 h-8" />
                     <img src="@/images/icon-o.svg" alt="O" class="w-8 h-8" />
@@ -14,7 +14,7 @@
                     <i v-show="whoTurn=='X'" ref="iconXRef" class="who-turn-icon" v-html="iconXSvg"></i>
                      TURN
                 </div>
-                <button class="shadow-[0_4px_0_0_#6B8997] bg-app-silver hover:bg-app-silver-hover p-2 rounded-lg cursor-pointer" v-html="iconRestartSvg" />
+                <button class=" justify-self-end shadow-[0_4px_0_0_#6B8997] bg-app-silver hover:bg-app-silver-hover p-2 rounded-lg cursor-pointer" v-html="iconRestartSvg" />
             </div>
             
         </Teleport>
@@ -74,4 +74,5 @@ const cellClick = (index: number) => {
 .who-turn-icon :deep(>svg>path) {
     @apply fill-app-silver;
 }
+
 </style>
