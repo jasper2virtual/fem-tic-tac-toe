@@ -9,13 +9,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 import MainScreenContainer from '@/components/main-screen-container.vue'
 import NewGameMenu from '@/components/new-game-menu.vue'
 import GameBoard from '@/components/game-board.vue'
 
 // Data
-const player1mark = ref('X');
+const player1mark = ref<'X'|'O'>('X');
+provide('player1mark', player1mark);
 
 // State
 const currentScreen = ref<'NewGameMenu' | 'GameBoard'>('NewGameMenu');
