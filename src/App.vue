@@ -22,6 +22,6 @@ const gameMode = ref<'vsCpu' | 'vsPlayer'>('vsCpu');
 provide('gameMode', gameMode);
 
 const currentScreen = ref<'NewGameMenu' | 'GameBoard'>('NewGameMenu');
-
+provide('currentScreen', currentScreen);
 
 </script>
