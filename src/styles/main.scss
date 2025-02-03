@@ -36,3 +36,16 @@
 @utility app-text-heading-l {
     @apply font-outfit font-bold text-[40px] tracking-[2.5px];
 }
+
+@utility app-button{
+    @apply cursor-pointer text-app-dark-navy app-text-heading-xs p-4 rounded-md;
+}
+
+@utility app-yellow-button {
+    @apply app-button;
+    @apply bg-app-light-yellow hover:bg-app-light-yellow-hover shadow-[0_4px_#CC8B13] ;
+}
+@utility app-silver-button {
+    @apply app-button;
+    @apply bg-app-silver hover:bg-app-silver-hover shadow-[0_4px_#6B8997];
+}

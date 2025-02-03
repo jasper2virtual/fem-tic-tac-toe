@@ -20,7 +20,7 @@
 
         </Teleport>
         <div>
-            <game-board :gameBoardState="gameBoardState" :lockBoard="lockBoard" @cellClick="cellClick" />
+            <game-board :gameBoardState="gameBoardState" :lockBoard="lockBoard" :isCpuTurn="isCpuTurn" @cellClick="cellClick" />
         </div>
         <div class="grid grid-cols-3 gap-4 text-app-dark-navy">
 
@@ -41,8 +41,7 @@
     <round-tied v-if="showRoundTied" />
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, inject, watch, getCurrentInstance } from 'vue'
-const instance = getCurrentInstance()
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, inject, watch } from 'vue'
 import iconXSvg from '@/images/icon-x.svg?raw'
 import iconOSvg from '@/images/icon-o.svg?raw'
 import iconRestartSvg from '@/images/icon-restart.svg?raw'
@@ -86,7 +85,6 @@ onMounted(() => {
 })
 const cellClick = (index: number) => {
     gameBoardState.value[index] = whoTurn.value
-    instance?.ctx?.$forceUpdate();
     whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
     if (gameMode.value == 'vsCpu') {
         isCpuTurn.value = true
@@ -114,13 +112,15 @@ const oIs = computed(() => {
 watch(isCpuTurn, (newValue) => {
     if (isRoundEnd.value) return
     if (newValue) {
-        const computerMove = ComputerMove(gameBoardState.value, {
-            huPlayer: xIs.value == 'CPU' ? 'O' : 'X',
-            aiPlayer: xIs.value == 'CPU' ? 'X' : 'O'
-        }, 'Hard')
-        gameBoardState.value[computerMove] = whoTurn.value
-        whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
-        isCpuTurn.value = false
+        setTimeout(() => {
+            const computerMove = ComputerMove(gameBoardState.value, {
+                huPlayer: xIs.value == 'CPU' ? 'O' : 'X',
+                aiPlayer: xIs.value == 'CPU' ? 'X' : 'O'
+            }, 'Hard')
+            gameBoardState.value[computerMove] = whoTurn.value
+            whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
+            isCpuTurn.value = false
+        }, 1000);
     }
 })
 watch(whoTurn, () => {
