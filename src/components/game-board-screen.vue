@@ -20,12 +20,12 @@
 
         </Teleport>
         <div>
-            <game-board :gameBoardState="gameBoardState" @cellClick="cellClick" />
+            <game-board :gameBoardState="gameBoardState" :lockBoard="lockBoard" @cellClick="cellClick" />
         </div>
         <div class="grid grid-cols-3 gap-4 text-app-dark-navy">
 
             <div class="win-count-box bg-app-light-blue">
-                <div class="title ">X ({{ }})</div>
+                <div class="title ">X ({{ xIs }})</div>
                 <div class="count ">{{ xWinCount }}</div>
             </div>
             <div class="win-count-box bg-app-silver">
@@ -33,21 +33,24 @@
                 <div class="count ">{{ tiesCount }}</div>
             </div>
             <div class="win-count-box bg-app-light-yellow">
-                <div class="title ">O ({{ }})</div>
+                <div class="title ">O ({{ oIs }})</div>
                 <div class="count ">{{ oWinCount }}</div>
             </div>
         </div>
     </div>
+    <round-tied v-if="showRoundTied" />
 </template>
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, inject, watch, getCurrentInstance } from 'vue'
+const instance = getCurrentInstance()
 import iconXSvg from '@/images/icon-x.svg?raw'
 import iconOSvg from '@/images/icon-o.svg?raw'
 import iconRestartSvg from '@/images/icon-restart.svg?raw'
 import gameBoard from './game-board.vue'
-const props = defineProps<{
-    gameMode: 'vsCpu' | 'vsPlayer'
-}>()
+import roundTied from './round-tied.vue'
+import Minimax from 'tic-tac-toe-minimax'
+const { GameStep, ComputerMove } = Minimax
+
 const whoTurn = ref<'X' | 'O'>('X')
 
 const iconORef = useTemplateRef('iconORef')
@@ -73,14 +76,87 @@ const updateIsTablet = () => {
 onUnmounted(() => {
     window.removeEventListener('resize', updateIsTablet)
 })
-const gameBoardState = ref<Array<'X' | 'O' | null>>(Array(9).fill(null))
+const gameBoardState = ref<Array<'X' | 'O' | number>>(Array(9).fill(null).map((val, index) => index))
+const isCpuTurn = ref<boolean>(false)
+onMounted(() => {
+    isCpuTurn.value = false
+    if (gameMode.value == 'vsCpu' && player1mark.value == 'O') {
+        isCpuTurn.value = true
+    }
+})
 const cellClick = (index: number) => {
     gameBoardState.value[index] = whoTurn.value
+    instance?.ctx?.$forceUpdate();
     whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
+    if (gameMode.value == 'vsCpu') {
+        isCpuTurn.value = true
+    }
 }
 const xWinCount = ref<number>(0)
 const tiesCount = ref<number>(0)
 const oWinCount = ref<number>(0)
+const gameMode = inject('gameMode')
+const player1mark = inject('player1mark')
+const xIs = computed(() => {
+    if (gameMode.value == 'vsCpu') {
+        if (player1mark.value == 'X') return 'YOU'
+        else return 'CPU'
+    } else {
+        if (player1mark.value == 'X') return 'P1'
+        else return 'P2'
+    }
+})
+const oIs = computed(() => {
+    if (xIs.value == 'YOU') return 'CPU'
+    else if (xIs.value == 'CPU') return 'YOU'
+    else return xIs.value == 'P1' ? 'P2' : 'P1'
+})
+watch(isCpuTurn, (newValue) => {
+    if (isRoundEnd.value) return
+    if (newValue) {
+        const computerMove = ComputerMove(gameBoardState.value, {
+            huPlayer: xIs.value == 'CPU' ? 'O' : 'X',
+            aiPlayer: xIs.value == 'CPU' ? 'X' : 'O'
+        }, 'Hard')
+        gameBoardState.value[computerMove] = whoTurn.value
+        whoTurn.value = whoTurn.value === 'X' ? 'O' : 'X'
+        isCpuTurn.value = false
+    }
+})
+watch(whoTurn, () => {
+    const whoWin = checkWhoWin()
+    if (whoWin == null) return
+    else if (whoWin == 'X') xWinCount.value++
+    else if (whoWin == 'O') oWinCount.value++
+    else if (whoWin == 'TIE') {
+        tiesCount.value++
+        showRoundTied.value = true
+    }
+    isRoundEnd.value = true
+})
+const showRoundTied = ref<boolean>(false)
+const showTakesTheRound = ref<boolean>(false)
+const showRestartGame = ref<boolean>(false)
+const isRoundEnd = ref<boolean>(false)
+
+const checkWhoWin = (): 'X' | 'O' | 'TIE' | null => {
+    const checkX = GameStep(gameBoardState.value,
+        {
+            huPlayer: 'X',
+            aiPlayer: 'O'
+        }, 'Easy')
+    if (checkX.winner == 'huPlayer') return 'X'
+    const checkO = GameStep(gameBoardState.value,
+        {
+            huPlayer: 'O',
+            aiPlayer: 'X'
+        }, 'Easy')
+    if (checkO.winner == 'huPlayer') return 'O'
+    const turnCount = gameBoardState.value.filter(cell => cell == 'O' || cell == 'X').length
+    if (turnCount == 9) return 'TIE'
+    return null
+}
+const lockBoard = computed(() => isCpuTurn.value || isRoundEnd.value)
 </script>
 <style lang="scss" scoped>
 @use "@/styles/main.scss";

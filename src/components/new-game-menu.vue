@@ -23,7 +23,7 @@ const gameMode = inject('gameMode')
 const emit = defineEmits(['newGame'])
 
 const newGame = (newGameMode: 'vsCpu' | 'vsPlayer') => {
-    gameMode.value = gameMode
+    gameMode.value = newGameMode
     emit('newGame')
 }
 </script>
