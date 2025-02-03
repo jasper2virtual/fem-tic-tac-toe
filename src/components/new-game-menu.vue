@@ -9,16 +9,21 @@
         </div>
         <div class="flex flex-col gap-6">
             <button class=" bg-app-light-yellow hover:bg-app-light-yellow-hover p-4 rounded-xl
-            app-text-heading-s shadow-[0_8px_0_0_#CC8B13]"
-            @click="$emit('newGame','vsCpu')">NEW GAME (VS CPU)</button>
+            app-text-heading-s shadow-[0_8px_0_0_#CC8B13]" @click="newGame('vsCpu')">NEW GAME (VS CPU)</button>
             <button class=" bg-app-light-blue hover:bg-app-light-blue-hover p-4 rounded-xl
-            app-text-heading-s shadow-[0_8px_0_0_#118C87]"
-            @click="$emit('newGame','vsPlayer')"
-            >NEW GAME (VS PLAYER)</button>
+            app-text-heading-s shadow-[0_8px_0_0_#118C87]" @click="newGame('vsPlayer')">NEW GAME (VS PLAYER)</button>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
+import { inject } from 'vue'
 import player1MarkSelector from './player1-mark-selector.vue'
-</script>
+const gameMode = inject('gameMode')
 
+const emit = defineEmits(['newGame'])
+
+const newGame = (newGameMode: 'vsCpu' | 'vsPlayer') => {
+    gameMode.value = gameMode
+    emit('newGame')
+}
+</script>
