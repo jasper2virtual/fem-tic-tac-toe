@@ -5,7 +5,7 @@
     <main-screen-container>
 
       <new-game-menu v-if="currentScreen === 'NewGameMenu'" @newGame="currentScreen = 'GameBoard'" />
-      <game-board-screen v-if="currentScreen === 'GameBoard'" />
+      <game-board-screen v-if="currentScreen === 'GameBoard'" @restartGame="currentScreen='NewGameMenu'" />
 
     </main-screen-container>
   </div>
@@ -22,6 +22,6 @@ const gameMode = ref<'vsCpu' | 'vsPlayer'>('vsCpu');
 provide('gameMode', gameMode);
 
 const currentScreen = ref<'NewGameMenu' | 'GameBoard'>('NewGameMenu');
-provide('currentScreen', currentScreen);
+
 
 </script>

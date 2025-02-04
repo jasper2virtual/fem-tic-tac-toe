@@ -5,14 +5,14 @@
                 ROUND TIED
             </div>
             <div class="flex gap-4">
-                <button class="app-silver-button" @click="currentScreen='NewGameMenu'">QUIT</button>
-                <button class="app-yellow-button">NEXT ROUND</button>
+                <button class="app-silver-button" @click="$emit('quit')">QUIT</button>
+                <button class="app-yellow-button" @click="$emit('nextRound')">NEXT ROUND</button>
             </div>
         </div>
     </modal-prompt>
 </template>
 <script lang="ts" setup>
-import {inject} from 'vue'
+
 import modalPrompt from './modal-prompt.vue'
-const currentScreen = inject('currentScreen')
+
 </script>
