@@ -4,8 +4,8 @@
         <Teleport to="#mobile-header" :disabled="isTablet">
             <div class="grid grid-cols-3 gap-4 items-center">
                 <div class="flex gap-2">
-                    <img src="@/images/icon-x.svg" alt="X" class="w-8 h-8" />
-                    <img src="@/images/icon-o.svg" alt="O" class="w-8 h-8" />
+                    <img src="/src/images/icon-x.svg" alt="X" class="w-8 h-8" />
+                    <img src="/src/images/icon-o.svg" alt="O" class="w-8 h-8" />
                 </div>
                 <div class="app-text-heading-xs text-app-silver shadow-[0_4px_0_0_#10212A] p-2 rounded-lg
                     mx-auto flex gap-4 items-center bg-app-semi-dark-navy">
@@ -47,10 +47,10 @@
     </TransitionGroup>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, inject, watch, defineEmits, nextTick } from 'vue'
-import iconXSvg from '@/images/icon-x.svg?raw'
-import iconOSvg from '@/images/icon-o.svg?raw'
-import iconRestartSvg from '@/images/icon-restart.svg?raw'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, inject, watch, defineEmits, nextTick, type Ref } from 'vue'
+import iconXSvg from '/src/images/icon-x.svg?raw'
+import iconOSvg from '/src/images/icon-o.svg?raw'
+import iconRestartSvg from '/src/images/icon-restart.svg?raw'
 import gameBoard from './game-board.vue'
 import roundTied from './round-tied.vue'
 import restartGame from './restart-game.vue'
@@ -110,8 +110,8 @@ const cellClick = (index: number) => {
 const xWinCount = ref<number>(0)
 const tiesCount = ref<number>(0)
 const oWinCount = ref<number>(0)
-const gameMode = inject('gameMode')
-const player1mark = inject('player1mark')
+const gameMode= inject('gameMode') as Ref<'vsCpu' | 'vsPlayer'>
+const player1mark = inject('player1mark') as Ref<'X' | 'O'>
 const xIs = computed(() => {
     if (gameMode.value == 'vsCpu') {
         if (player1mark.value == 'X') return 'YOU'
@@ -223,7 +223,7 @@ watch(isRoundEnd, () => {
 
 </script>
 <style lang="scss" scoped>
-@use "@/styles/main.scss";
+@use "/src/styles/main.scss";
 
 .who-turn-icon :deep(>svg>path) {
     @apply fill-app-silver;

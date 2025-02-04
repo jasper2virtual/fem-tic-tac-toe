@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col gap-10">
         <div class="flex gap-2 justify-center">
-            <img src="@/images/icon-x.svg" alt="X" class="w-8 h-8" />
-            <img src="@/images/icon-o.svg" alt="O" class="w-8 h-8" />
+            <img src="/src/images/icon-x.svg" alt="X" class="w-8 h-8" />
+            <img src="/src/images/icon-o.svg" alt="O" class="w-8 h-8" />
         </div>
         <div>
             <player1-mark-selector />
@@ -16,9 +16,9 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { inject } from 'vue'
+import { inject, type Ref } from 'vue'
 import player1MarkSelector from './player1-mark-selector.vue'
-const gameMode = inject('gameMode')
+const gameMode = inject('gameMode') as Ref<'vsCpu' | 'vsPlayer'>
 
 const emit = defineEmits(['newGame'])
 

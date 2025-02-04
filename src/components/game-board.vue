@@ -9,8 +9,8 @@
                 'cursor-not-allowed': cellState === 'X' || cellState === 'O' || lockBoard,
                 'cursor-wait': isCpuTurn
             }">
-            <img class="w-[45%] aspect-square" v-if="cellState === 'X'" src="@/images/icon-x.svg" alt="X" />
-            <img class="w-[45%] aspect-square" v-else-if="cellState === 'O'" src="@/images/icon-o.svg" alt="O" />
+            <img class="w-[45%] aspect-square" v-if="cellState === 'X'" src="/src/images/icon-x.svg" alt="X" />
+            <img class="w-[45%] aspect-square" v-else-if="cellState === 'O'" src="/src/images/icon-o.svg" alt="O" />
         </button>
     </div>
 </template>

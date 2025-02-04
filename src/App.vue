@@ -12,9 +12,9 @@
 </template>
 <script lang="ts" setup>
 import { provide, ref } from 'vue';
-import MainScreenContainer from '@/components/main-screen-container.vue'
-import NewGameMenu from '@/components/new-game-menu.vue'
-import GameBoardScreen from '@/components/game-board-screen.vue'
+import MainScreenContainer from './components/main-screen-container.vue'
+import NewGameMenu from './components/new-game-menu.vue'
+import GameBoardScreen from './components/game-board-screen.vue'
 
 const player1mark = ref<'X' | 'O'>('X');
 provide('player1mark', player1mark);

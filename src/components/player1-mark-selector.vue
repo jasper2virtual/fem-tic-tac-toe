@@ -20,8 +20,8 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, useTemplateRef, inject } from 'vue'
-import iconXSvg from '@/images/icon-x.svg?raw'
-import iconOSvg from '@/images/icon-o.svg?raw'
+import iconXSvg from '/src/images/icon-x.svg?raw'
+import iconOSvg from '/src/images/icon-o.svg?raw'
 
 const iconXRef = useTemplateRef('iconXRef')
 const iconORef = useTemplateRef('iconORef')
@@ -37,7 +37,7 @@ onMounted(() => {
 const player1mark = inject('player1mark')
 </script>
 <style lang="scss" scoped>
-@use "@/styles/main.scss";
+@use "/src/styles/main.scss";
 
 .icon-x-o {
     @apply z-10;
